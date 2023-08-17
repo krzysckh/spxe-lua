@@ -197,7 +197,17 @@ return {
     released = function(x)
       if spxe.spxeMouseReleased(x) == 0 then return false else return true end end,
     visible = spxe.spxeMouseVisible,
+    pos = function()
+      x = cffi.new("int[1]"); y = cffi.new("int[1]")
+      spxe.spxeMousePos(x, y);
+
+      return {
+        x = x[0] < 0 and 0 or x[0],
+        y = y[0] < 0 and 0 or y[0]
+      }
+    end,
     buttons = mouse
   },
-  keys = keys
+  keys = keys,
+  ffi = cffi
 }
