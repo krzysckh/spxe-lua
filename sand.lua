@@ -1,6 +1,6 @@
 local s = require("spxe")
 
-local w = 48
+local w = 32
 local h = w
 
 local bg = { r = 0, g = 0, b = 255, a = 255 }
@@ -35,6 +35,16 @@ end
 local update_pixels = function()
   local cur
 
+  local goleft = function(x, y)
+    set(x, y, bg)
+    set(x - 1, y - 1, fg)
+  end
+
+  local goright = function(x, y)
+    set(x, y, bg)
+    set(x + 1, y - 1, fg)
+  end
+
   for y = 0, h - 1 do
     for x = 0, w - 1 do
       cur = get(x, y)
@@ -42,12 +52,17 @@ local update_pixels = function()
       if is_sand(pixels[cur]) then
         if y - 1 >= 0 then
           if (is_sand(pixels[get(x, y - 1)])) then
-            if (x - 1 >= 0 and not is_sand(pixels[get(x - 1, y - 1)])) then
-              set(x, y, bg)
-              set(x - 1, y - 1, fg)
-            elseif (x + 1 > w and not is_sand(pixels[get(x + 1, y - 1)])) then
-              set(x, y, bg)
-              set(x + 1, y - 1, fg)
+            local o1 = x - 1 >= 0 and not is_sand(pixels[get(x - 1, y - 1)])
+            local o2 = x + 1 < w and not is_sand(pixels[get(x + 1, y - 1)])
+
+            if o1 == true and o2 == true then
+              if math.random() >= 0.5 then
+                goleft(x, y)
+              else
+                goright(x, y)
+              end
+            elseif o1 then goleft(x, y)
+            elseif o2 then goright(x, y)
             end
           else
             set(x, y, bg)
