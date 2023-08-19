@@ -73,10 +73,19 @@ local update_pixels = function()
       if is(pixels[cur], sand) then
         if y - 1 >= 0 then
           if is(pixels[get(x, y - 1)], sand) then
-            if x - 1 >= 0 and is(pixels[get(x - 1, y - 1)], bg) then
-              goleft(x, y)
-            elseif x + 1 < w and is(pixels[get(x + 1, y - 1)], bg) then
-              goright(x, y)
+            local o1 = x - 1 >= 0 and is(pixels[get(x - 1, y - 1)], bg)
+            local o2 = x + 1 < w and is(pixels[get(x + 1, y - 1)], bg)
+
+            -- this is a breaindead approach, but it makes it more
+            -- random-looking so the sand doesn't just fall off on the left, and
+            -- then on the right, but does it randomly
+
+            if math.random() >= 0.5 then
+              if o1 then goleft(x, y)
+              elseif o2 then goright(x, y) end
+            else
+              if o2 then goright(x, y)
+              elseif o1 then goleft(x, y) end
             end
           elseif is(pixels[get(x, y - 1)], bg) then
             set(x, y, bg)

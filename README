@@ -5,11 +5,11 @@ lua ffi bindings for https://github.com/LogicEu/spxe
 
 usage:
   $ ./build.sh
+  $ luajit sand.lua
   $ lua53 example.lua
 
-see example.lua.
+see {example,sand}.lua for examples
 
 caveats:
   - This requires cffi for PUC-Rio lua.
   - spxeEnd is renamed to spxe.finish(), because 'end' is a keyword in lua.
-  - keyboard and mouse functions are now less cool
