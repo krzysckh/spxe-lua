@@ -2,7 +2,7 @@
 
 set -xe
 
-LUA_VERSION="5.1"
+[ -z $LUA_VERSION ] && LUA_VERSION="5.1"
 
 usage() {
   echo "usage: $0 build | install | uninstall"
