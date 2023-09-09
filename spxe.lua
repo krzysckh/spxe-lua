@@ -170,7 +170,7 @@ local mouse = {
   button_middle = 2,
 }
 
-local spxe = cffi.load("./spxe.so")
+local spxe = cffi.load("spxe")
 
 return {
   run = spxe.spxeRun,

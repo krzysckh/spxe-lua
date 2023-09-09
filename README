@@ -5,6 +5,7 @@ lua ffi bindings for https://github.com/LogicEu/spxe
 
 usage:
   $ ./build.sh
+  # ./build.sh install
   $ luajit sand.lua
   $ lua53 example.lua
 
